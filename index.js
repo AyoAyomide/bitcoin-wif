@@ -1,7 +1,33 @@
+const phrase = require('./src/phrase_and_seed');
+const xprivKeyFromSeed = require('./src/private_key');
+const wifFromXpriv = require('./src/wif');
+class WIF {
+    constructor(network) {
+        this.phrase = new phrase();
+        this.network = network;
+    }
+    mnemonic() {
+        return this.phrase.generate();
+    }
+    seed(mnemonic) {
+        return this.phrase.seed(mnemonic);
+    }
+    xpriv(seed) {
+        return xprivKeyFromSeed(seed);
+    }
+    wif(xpriv) {
+        let initWIF = new wifFromXpriv(xpriv, this.network);
+        return initWIF.base58WIF();
+    }
+}
 
-// generate the mnemonic
-const bip39 = require('bip39');
-bip39.setDefaultWordlist('EN');
-const mnemonic = bip39.generateMnemonic()
-const seed = bip39.mnemonicToSeedSync(mnemonic).toString('hex');
-console.log({ mnemonic, seed, entropy })
+let word = "oak quarter fly fabric diamond human rain meadow decide asthma honey spy";
+let seed = "382b1c3805a7fe3fb8c79dd146588cb47013d7598520d987cd44e82765a8c3596dde997a205e0eb58069ee0a00d3cf5aa26a273e5c8ee83727354d76ac51521f";
+let xpriv = "7709595d2804a377d9f6c47b5ba66ca3343991467d4e3351c05c3199c85d0625";
+// xpriv = '619c335025c7f4012e556c2a58b2506e30b8511b53ade95ea316fd8c3286feb9';
+
+let key = new WIF('testnet');
+
+
+
+console.log(key.wif(xpriv));
