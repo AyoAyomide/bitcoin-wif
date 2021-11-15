@@ -1,8 +1,10 @@
 const phrase = require('./src/phrase_and_seed');
-const xprivKeyFromSeed = require('./src/private_key');
+const privateKeyFromSeed = require('./src/private_key');
 const wifFromXpriv = require('./src/wif');
+const ErrorHook = require('./src/error/error_hook');
 class WIF {
     constructor(network) {
+        let error;
         this.phrase = new phrase();
         this.initWIF = new wifFromXpriv(network);
     }
@@ -13,7 +15,7 @@ class WIF {
         return this.phrase.seed(mnemonic);
     }
     xpriv(seed) {
-        return xprivKeyFromSeed(seed);
+        return privateKeyFromSeed(seed);
     }
     wif(xpriv) {
         return this.initWIF.base58WIF(xpriv);
