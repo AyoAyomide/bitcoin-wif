@@ -1,47 +1,29 @@
 // private key to wif
-const digestSync = require('crypto-digest-sync');
 const bs58 = require('bs58');
+const sha256_lib = require('./lib/sha256');
 const ErrorHook = require('./error/error_hook');
 const networkArray = ['testnet', 'mainnet', 'regtest'];
 class WIF {
-    constructor(privateKey, network) {
-        let error;
-        if (!privateKey || /^\s*$/.test(privateKey)) error = "xpriv is empty";
+    constructor(network) {
+        this.error;
         if (!networkArray.includes(network)) error = 'unknown network';
-        if (error) ErrorHook({ error, message: 'unable to convert xpriv to wif' });
-        this.privateKey = privateKey;
+        if (this.error) ErrorHook({ error: this.error, message: 'the network is not valid, supported network are testnet,mainnet,regtest' });
         this.network = network;
     }
-    appendKeyVersion() {
+    appendKeyVersion(key) {
         let verison = this.network === 'mainnet' ? '80' : 'ef';
-        return `${verison}${this.privateKey}`;
+        return `${verison}${key}`;
     }
-    arraybuffer2hex(buffer) {
-        let hexCodes = [], i = 0, view = new DataView(buffer);
-        for (i; i < view.byteLength; i += 4) {
-            let value, stringValue, padding = '00000000', paddedValue;
-            value = view.getUint32(i);
-            stringValue = value.toString(16);
-            paddedValue = (padding + stringValue).slice(-padding.length);
-            hexCodes.push(paddedValue);
-        }
-        return hexCodes.join("");
+    checksum(key) {
+        let doubleSha256 = sha256_lib(sha256_lib(this.appendKeyVersion(key))).toUpperCase();
+        return doubleSha256.slice(0, 8);
     }
-    hash(hexString) {
-        let buffer = new Uint8Array(hexString.match(/[\da-f]{2}/gi).map((h) => parseInt(h, 16)));
-        let hashDigest = digestSync("SHA-256", buffer);
-        return this.arraybuffer2hex(hashDigest);
-    }
-    doubleSha256() {
-        return this.hash(this.hash(this.appendKeyVersion())).toUpperCase();
-    }
-    checksum() {
-        return this.doubleSha256().slice(0, 8);
-    }
-    base58WIF() {
-        let buffer = `${this.appendKeyVersion()}${this.checksum()}`;
+    base58WIF(privateKey) {
+        if (!privateKey || /^\s*$/.test(privateKey)) this.error = "private key is empty";
+        let buffer = `${this.appendKeyVersion(privateKey)}${this.checksum(privateKey)}`;
         let bytes = Buffer.from(buffer, 'hex');
         let wif = bs58.encode(bytes);
+        if (this.error) ErrorHook({ error: this.error, message: 'unable to convert private key to WIF' });
         return wif;
     }
 }

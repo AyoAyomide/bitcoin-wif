@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,8 @@
     "bs58": "^4.0.1",
     "crypto-digest-sync": "^1.0.0",
     "hdkey": "^2.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
