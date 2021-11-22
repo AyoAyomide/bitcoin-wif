@@ -3,11 +3,15 @@ const HDKey = require('hdkey');
 const ErrorHook = require('./error/error_hook');
 
 function PRIVATE_KEY(seed) {
-    let error;
-    if ((Buffer.from(seed).length * 4) !== 512) error = "seed length is less than 512 byte";
-    const hdkey = HDKey.fromMasterSeed(Buffer.from(seed));
-    if (error) ErrorHook({ error, message: 'invalid seed length' });
-    return hdkey.privateKey.toString('hex');
+    try {
+        if (!seed || /^\s*$/.test(seed)) throw 'seed is empty';
+        if ((Buffer.from(seed).length * 4) !== 512) throw "seed length is less than 512 byte";
+        const hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'));
+        return hdkey.privateKey.toString('hex');
+    }
+    catch (error) {
+        ErrorHook({ error, message: 'error converting seed to private key' });
+    }
 }
 
 module.exports = PRIVATE_KEY;

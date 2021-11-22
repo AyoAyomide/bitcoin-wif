@@ -1,40 +1,31 @@
-const phrase = require('./src/phrase_and_seed');
+const mnemonic = require('./src/mnemonic');
+const seed = require('./src/seed');
 const privateKeyFromSeed = require('./src/private_key');
-const wifFromXpriv = require('./src/wif');
-const ErrorHook = require('./src/error/error_hook');
+const wifFromPrivateKey = require('./src/wif');
 class WIF {
     constructor(network) {
         let error;
-        this.phrase = new phrase();
-        this.initWIF = new wifFromXpriv(network);
+        this.initWIF = new wifFromPrivateKey(network);
     }
     mnemonic() {
-        return this.phrase.generate();
+        return mnemonic;
     }
     seed(mnemonic) {
-        return this.phrase.seed(mnemonic);
+        return seed(mnemonic);
     }
-    xpriv(seed) {
+    privateKey(seed) {
         return privateKeyFromSeed(seed);
     }
-    wif(xpriv) {
-        return this.initWIF.base58WIF(xpriv);
+    wif(privateKey) {
+        return this.initWIF.base58WIF(privateKey);
     }
 }
 
-// let word = "oak quarter fly fabric diamond human rain meadow decide asthma honey spy";
-// let seed = "382b1c3805a7fe3fb8c79dd146588cb47013d7598520d987cd44e82765a8c3596dde997a205e0eb58069ee0a00d3cf5aa26a273e5c8ee83727354d76ac51521f";
-// let xpriv = "7709595d2804a377d9f6c47b5ba66ca3343991467d4e3351c05c3199c85d0625";
-// // xpriv = '619c335025c7f4012e556c2a58b2506e30b8511b53ade95ea316fd8c3286feb9';
+let MBTC_word = "army van defense carry jealous true garbage claim echo media make crunch";
+let MBTC_seed = "5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39a88b76373733891bfaba16ed27a813ceed498804c0570";
+let MBTC_privateKey = "b2a0d576b828b537688b561f2cfa8dac3602d54c62bde619ad5331e6c235ee26";
 
-const sample1PrivateKey = '619c335025c7f4012e556c2a58b2506e30b8511b53ade95ea316fd8c3286feb9';
-const sample1WIF = '92KuV1Mtf9jTttTrw1yawobsa9uCZGbfpambH8H1Y7KfdDxxc4d';
+let BTC_wiki_privatekey = '0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D';
+let BTC_wiki_wif = '5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ';
 
-let key = new WIF('testnet');
-
-let result = key.wif(sample1PrivateKey);
-if (result === sample1WIF) {
-    console.log('test success');
-} else {
-    console.log('test fail');
-}
+module.exports = WIF;
