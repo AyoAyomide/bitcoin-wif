@@ -5,7 +5,7 @@ const ErrorHook = require('./error/error_hook');
 const networkArray = ['testnet', 'mainnet', 'regtest'];
 class WIF {
     constructor(network) {
-        if (!networkArray.includes(network)) ErrorHook({ error: 'unknown network', message: 'the network is not valid, supported network are testnet,mainnet,regtest' });
+        if (!networkArray.includes(network)) ErrorHook({ error: 'unknown network', message: 'Network not identified, supported network are testnet,mainnet,regtest' });
         this.network = network;
     }
     appendKeyVersion(key) {
