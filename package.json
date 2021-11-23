@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-wif",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bitcoin-core mnemonic,seed,private key and wif generator",
   "main": "index.js",
   "repository": {
