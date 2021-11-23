@@ -8,11 +8,6 @@
     "url": "https://github.com/AyoAyomide/HD-wallet.git"
   },
   "homepage": "https://github.com/AyoAyomide/HD-wallet",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon",
-    "test": "mocha"
-  },
   "keywords": [
     "bitcoin",
     "private key",
