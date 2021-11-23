@@ -8,7 +8,7 @@ It generates 12 mnemonic word list, which can be used to generate a seed phrase,
 ### Using npm
 
 ```bash
-npm i firestore_goose
+npm i bitcoin-wif
 ```
 
 ### Node.js
