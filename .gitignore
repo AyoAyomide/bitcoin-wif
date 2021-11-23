@@ -6,3 +6,5 @@
 .DS_Store
 .env
 .todo.txt
+.nodemon.json
+.mocharc.json
