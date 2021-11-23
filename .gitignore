@@ -2,7 +2,6 @@
 /logs
 /npm-debug.log
 /node_modules
-/test
 .DS_Store
 .env
 .todo.txt
