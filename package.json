@@ -1,18 +1,13 @@
 {
   "name": "bitcoin-wif",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bitcoin-core mnemonic,seed,private key and wif generator",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AyoAyomide/HD-wallet.git"
+    "url": "https://github.com/AyoAyomide/bitcoin-wif"
   },
-  "homepage": "https://github.com/AyoAyomide/HD-wallet",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon",
-    "test": "mocha"
-  },
+  "homepage": "https://github.com/AyoAyomide/bitcoin-wif",
   "keywords": [
     "bitcoin",
     "private key",
