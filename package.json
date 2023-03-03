@@ -5,9 +5,9 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AyoAyomide/HD-wallet.git"
+    "url": "https://github.com/AyoAyomide/bitcoin-wif"
   },
-  "homepage": "https://github.com/AyoAyomide/HD-wallet",
+  "homepage": "https://github.com/AyoAyomide/bitcoin-wif",
   "keywords": [
     "bitcoin",
     "private key",
